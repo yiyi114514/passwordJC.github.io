@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>随机密码生成器</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  input[type="number"],
+  input[type="checkbox"] {
+    margin: 5px;
+  }
+  button {
+    margin-top: 10px;
+  }
+  #password {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+</style>
+</head>
+<body>
+<h1>随机密码生成器</h1>
+
+<label for="length">密码长度:（4-32）:</label>
+<input type="number" id="length" value="8" min="4" max="32">
+
+<label for="numbers">包含数字:</label>
+<input type="checkbox" id="numbers" checked>
+
+<label for="lowercase">包含小写字母:</label>
+<input type="checkbox" id="lowercase" checked>
+
+<label for="uppercase">包含大写字母:</label>
+<input type="checkbox" id="uppercase" checked>
+
+<label for="symbols">包含特殊字符:</label>
+<input type="checkbox" id="symbols" checked>
+
+<button onclick="generatePassword()">生成密码</button>
+
+<input type="text" id="password" readonly>
+
+<button onclick="copyPassword()">复制密码</button>
+
+<script>
+function generatePassword() {
+  const length = document.getElementById('length').value;
+  const includeNumbers = document.getElementById('numbers').checked;
+  const includeLowercase = document.getElementById('lowercase').checked;
+  const includeUppercase = document.getElementById('uppercase').checked;
+  const includeSymbols = document.getElementById('symbols').checked;
+  
+  const numbers = '0123456789';
+  const lowercase = 'abcdefghijklmnopqrstuvwxyz';
+  const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const symbols = '!@#$%^&*()-_=+[]{}|;:,.<>?/\\';
+  
+  let allowedChars = '';
+  if (includeNumbers) allowedChars += numbers;
+  if (includeLowercase) allowedChars += lowercase;
+  if (includeUppercase) allowedChars += uppercase;
+  if (includeSymbols) allowedChars += symbols;
+  
+  let password = '';
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * allowedChars.length);
+    password += allowedChars[randomIndex];
+  }
+  
+  document.getElementById('password').value = password;
+}
+
+function copyPassword() {
+  const passwordField = document.getElementById('password');
+  passwordField.select();
+  passwordField.setSelectionRange(0, 99999); // For mobile devices
+  document.execCommand('copy');
+  alert('密码已复制到剪贴板');
+}
+</script>
+<p style="font-size: 1.5em; margin-top: 20px; text-align: center;">
+  <strong style="color: blue;">该程序绝不收取使用者生成的密码，请放心使用</strong><br>
+</p>
+<p style="font-size: 0.8em; margin-top: 20px; text-align: center;">注：必须选择一个选项，否则生成的密码是undefined</p>
+<a href="chaxun.html" style="color: blue;">查询我生成的密码的安全性</a>
+<a href="guanyu.html" style="color: blue;">关于</a>
+<p style="font-size: 1.5em; margin-top: 20px; text-align: center;">
+  <strong>Made By XiaoJingjun</strong><br>
+</p>
+</body>
+</html>

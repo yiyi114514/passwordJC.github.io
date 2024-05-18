@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>密码安全性查询</title>
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f7f7f7;
+  }
+  .container {
+    text-align: center;
+  }
+  input {
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #5cb85c;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #4cae4c;
+  }
+  .result {
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>密码安全性查询</h1>
+  <input type="password" id="password" placeholder="请输入密码">
+  <button onclick="checkPassword()">查询</button>
+  <div class="result">
+    <p>密码安全程度：<span id="score">0</span>/250</p>
+  </div>
+</div>
+
+<script>
+function checkPassword() {
+  var password = document.getElementById('password').value;
+  var score = 0;
+  var lengthBonus = password.length * 4;
+  var upperCaseBonus = (password.match(/[A-Z]/g) || []).length * 2;
+  var lowerCaseBonus = (password.match(/[a-z]/g) || []).length * 2;
+  var numbersBonus = (password.match(/[0-9]/g) || []).length * 4;
+  var symbolsBonus = (password.match(/[^a-zA-Z0-9]/g) || []).length * 6;
+
+  score = lengthBonus + upperCaseBonus + lowerCaseBonus + numbersBonus + symbolsBonus;
+
+  document.getElementById('score').textContent = score;
+}
+</script>
+</body>
+</html>
